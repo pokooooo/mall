@@ -63,7 +63,6 @@
                 commentInfo: {},
                 recommends: [],
                 themeTops: [0],
-                currentIndex: 0,
             }
         },
         created() {
@@ -108,12 +107,18 @@
             },
             contentScroll(position){
                 const positionY = -position.y
-                let length = this.themeTops.length
-                for (let i =0; i < length-1; i++) {
-                    if (this.currentIndex !== i && (positionY >= this.themeTops[i] && positionY < this.themeTops[i+1])) {
-                        this.currentIndex = i;
-                        this.$refs.nav.currentIndex = i;
-                    }
+                if(positionY < this.themeTops[1]){
+
+                    this.$refs.nav.currentIndex = 0;
+                }else if(this.themeTops[1] <= positionY && positionY < this.themeTops[2]){
+
+                    this.$refs.nav.currentIndex = 1;
+                }else if(this.themeTops[2] <= positionY && positionY < this.themeTops[3]){
+
+                    this.$refs.nav.currentIndex = 2;
+                }else if(this.themeTops[3] <= positionY){
+
+                    this.$refs.nav.currentIndex = 3;
                 }
                 this.isShowBackTop = (positionY) > 500
             },
